@@ -1,0 +1,410 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test HAVE_FFI_CALL
+-- Performing Test HAVE_FFI_CALL - Success
+-- Found FFI: /usr/lib/x86_64-linux-gnu/libffi.so  
+-- Performing Test Terminfo_LINKABLE
+-- Performing Test Terminfo_LINKABLE - Success
+-- Found Terminfo: /usr/lib/x86_64-linux-gnu/libtinfo.so  
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11") 
+-- Found LibXml2: /usr/lib/x86_64-linux-gnu/libxml2.so (found version "2.9.13") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jarvis/ACC/slim-use/build
+[ 50%] Building CXX object CMakeFiles/cs-ssa.dir/main.cpp.o
+[100%] Linking CXX executable cs-ssa
+[100%] Built target cs-ssa
+Total number of functions: 1
+Total number of basic blocks: 4
+Total number of instructions: 13
+Total number of call instructions: 1
+Total number of direct-call instructions: 1
+Total number of indirect-call instructions: 0
+[test.c] Function: main
+-------------------------------------
+Basic block 0: entry (Predecessors: [])
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2][5] <i_main, 1> = <a_main, 1>
+ [3][5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+
+Basic block 1: if.then_main (Predecessors: [entry])
+ [5][6] add_main = undef + 5
+ [6][6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+
+Basic block 2: if.else_main (Predecessors: [entry])
+ [8][8] sub_main = undef - 5
+ [9][8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main])
+ [11][10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+
+
+///////////////////// Reverse Iteration //////////////////////////////
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : 
+ [11]
+String_LHS : i4_main : String_RHS : 
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : 
+ [5]
+String_LHS : add_main : String_RHS : 
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : 
+ [8]
+String_LHS : sub_main : String_RHS : 
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : 
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : i4_main, 
+ [11]
+String_LHS : i4_main : String_RHS : 
+KILL_Set.find
+1, a_main ,
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : a_main, i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : i4_main, 
+ [5]
+String_LHS : add_main : String_RHS : 
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : i4_main, 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : i4_main, 
+ [8]
+String_LHS : sub_main : String_RHS : 
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : i4_main, 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : 
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : a_main, i4_main, 
+ [11]
+String_LHS : i4_main : String_RHS : 
+KILL_Set.find
+1, a_main ,
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : a_main, i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : a_main, i4_main, 
+ [5]
+String_LHS : add_main : String_RHS : 
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, add_main ,
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : add_main, i4_main, 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : a_main, i4_main, 
+ [8]
+String_LHS : sub_main : String_RHS : 
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, sub_main ,
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : i4_main, sub_main, 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : i4_main, 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : i4_main, 
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : a_main, i4_main, 
+ [11]
+String_LHS : i4_main : String_RHS : 
+KILL_Set.find
+1, a_main ,
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : a_main, i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : a_main, add_main, i4_main, 
+ [5]
+String_LHS : add_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, add_main ,
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : 5, add_main, i4_main, undef, 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : a_main, i4_main, sub_main, 
+ [8]
+String_LHS : sub_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, sub_main ,
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : 5, i4_main, sub_main, undef, 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : add_main, i4_main, sub_main, 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : add_main, i4_main, sub_main, 
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : a_main, i4_main, 
+ [11]
+String_LHS : i4_main : String_RHS : 
+KILL_Set.find
+1, a_main ,
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : a_main, i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : 5, a_main, add_main, i4_main, undef, 
+ [5]
+String_LHS : add_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, add_main ,
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : 5, add_main, i4_main, undef, 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : 5, a_main, i4_main, sub_main, undef, 
+ [8]
+String_LHS : sub_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, sub_main ,
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : 5, i4_main, sub_main, undef, 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : 5, add_main, i4_main, sub_main, undef, 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : 5, add_main, i4_main, sub_main, undef, 
+[test.c] Function: main
+-------------------------------------
+
+Basic block 3: if.end_main (Predecessors: [if.else_main, if.then_main]-------Successors: [])
+
+BB_curr_Out[3] : a_main, i4_main, 
+ [11]
+String_LHS : i4_main : String_RHS : 
+KILL_Set.find
+1, a_main ,
+[10] <i4_main, 1> = <a_main, 1>
+ [12][10] return i4_main
+
+BB_curr_In[3] : a_main, i4_main, 
+
+Basic block 1: if.then_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[1] : 5, a_main, add_main, i4_main, undef, 
+ [5]
+String_LHS : add_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[6] add_main = undef + 5
+ [6]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, add_main ,
+[6] <a_main, 1> = <add_main, 1>
+ [7][7] branch if.end_main
+
+BB_curr_In[1] : 5, add_main, i4_main, undef, 
+
+Basic block 2: if.else_main (Predecessors: [entry]-------Successors: [if.end_main------3])
+
+BB_curr_Out[2] : 5, a_main, i4_main, sub_main, undef, 
+ [8]
+String_LHS : sub_main : String_RHS : 
+KILL_Set.find
+1, undef ,2, 5 ,
+[8] sub_main = undef - 5
+ [9]
+String_LHS : a_main : String_RHS : 
+KILL_Set.find
+1, sub_main ,
+[8] <a_main, 1> = <sub_main, 1>
+ [10]branch if.end_main
+
+BB_curr_In[2] : 5, i4_main, sub_main, undef, 
+
+Basic block 0: entry (Predecessors: []-------Successors: [if.then_main------1 , if.else_main------2])
+
+BB_curr_Out[0] : 5, add_main, i4_main, sub_main, undef, 
+ [0] [1][4] call = call __isoc99_scanf(.str[0][0], a_main)
+ [2]
+String_LHS : i_main : String_RHS : 
+[5] <i_main, 1> = <a_main, 1>
+ [3]
+String_LHS : cmp_main : String_RHS : 
+[5] cmp_main = i_main > undef
+ [4][5] branch (cmp_main) if.then_main, if.else_main
+
+BB_curr_In[0] : 5, add_main, i4_main, sub_main, undef, 

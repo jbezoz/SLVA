@@ -1302,12 +1302,10 @@ void slim::IR::dumpIR()
                     if (instruction->getInstructionType() == InstructionType::LOAD ||
                         instruction->getInstructionType() == InstructionType::COMPARE ||
                         instruction->getInstructionType() == InstructionType::BINARY_OPERATION ||
-                        instruction->getInstructionType() == InstructionType::STORE) {
+                        instruction->getInstructionType() == InstructionType::STORE ) {
                         //LHS in KILL_SET
                         std::string LHS = instruction->getLHS().first->getName().str();
                         KILL_Set.insert(LHS);
-                        //RHS Hack
-                       
                         // RHS in GEN_SET
                         for(auto opr : instruction->getRHS()) {
                             if(opr.first->getOperandType() == OperandType::VARIABLE) {
@@ -1340,7 +1338,6 @@ void slim::IR::dumpIR()
                         if (branch_inst = llvm::dyn_cast<llvm::BranchInst>(instruction->getLLVMInstruction())) {
                             if(!branch_inst->isUnconditional()) {
                                 llvm::Value *condition = branch_inst->getCondition();
-                                llvm::outs() << condition->getName().str() << "\n";
                                 GEN_Set.insert( condition->getName().str());
                                 X.insert(condition->getName().str());
                             }
@@ -1356,12 +1353,25 @@ void slim::IR::dumpIR()
                         //     }
                         // }
                     }
-                    // else if(instruction->getInstructionType() == InstructionType::PHI) {
-                    //     for(int i = 0; i < instruction->operands.size(); i++) {
-                    //         GEN_Set(instruction->operands[i].first);
-                    //         X.insert(instruction->operands[i].first);
-                    //     }
-                    // }
+                    else if(instruction->getInstructionType() == InstructionType::PHI) {
+                        //LHS in KILL_SET
+                        std::string LHS = instruction->getResultOperand().first->getValue()->getName().str();
+                        KILL_Set.insert(LHS);
+                        //RHS in GEN_Set
+                        for (int i = 0; i < instruction->getNumOperands(); i++) {
+                            if(instruction->getOperand(i).first->hasName()) {
+                                GEN_Set.insert(instruction->getOperand(i).first->getName().str());
+                            }
+                        }
+                        // Modify X
+                        if(X.find(LHS) != X.end()) 
+                        {
+                            X.erase(LHS);
+                            for(auto RHS : GEN_Set) {
+                                X.insert(RHS);
+                            }
+                        }
+                    }
                     instruction->printInstruction();
                 }
                 BB_m_current[curr_BlockId].first = X;
@@ -1378,10 +1388,11 @@ void slim::IR::dumpIR()
         if(BB_m_prev == BB_m_current) {
             changed = false;
         }
-        Table.push_back(BB_m_current);
+        // Table.push_back(BB_m_current);
         BB_m_prev = BB_m_current;
         llvm::outs() << "\nITERATION : " << ++no_of_iteration << "\n";
     }
+    //print table
 }
 
 unsigned slim::IR::getNumCallInstructions(llvm::Function *function)

@@ -4,8 +4,8 @@ if [ -d "build" ]; then
 else
     # If it doesn't exist, make a dir name build
     echo "Creating build"
+    mkdir build/
 fi
-mkdir build/
 cd build/ && cmake .. 
 make
 ./cs-ssa ../testcases/test.slim.ll 
